@@ -7,8 +7,17 @@ const upload = multer({ dest: 'uploads/' })
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require("fs");
+var nodemailer = require('nodemailer');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'ekoprasetia23@gmail.com',
+    pass: 'rfbsvqwrfdlwnvse'
+  }
+});
 
 class Controller {
 
@@ -37,6 +46,20 @@ class Controller {
     })
     .then((data) => {
         res.status(201).json({id: data.id, email: data.email})
+        var mailOptions = {
+          from: 'ekopraseti23@gmail.com',
+          to: data.email,
+          subject: '[on behalf Devbisa.com]Congratulation, you just join to Devbisa.com',
+          text: 'Congratulation, you just join to Devbisa.com'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -48,25 +71,42 @@ class Controller {
     Project.create({
       name : req.body.name,
       description : req.body.description,
-      imageType: req.file.mimetype,
-      imageName: req.file.originalname,
-      imageData: req.file.buffer
+      imageUrl: req.body.imageUrl
     })
       .then((data) => {
         res.status(201).json({ data })
       })
       .catch((err) => {
-      // next(err)
+      next(err)
       console.log(err);
     })
   }
 
-  static showAllActiveProject(req, res, next){
+  static showAllProjectUser(req, res, next){
+    let dataProject = []
     Project.findAll({
-      where : {
-        status: { [Op.not]: 'Complete'}
-      }
+      include: [{
+        model : User, 
+        attributes: { exclude: ['password'] },
+      }]
     })
+      .then(({data}) => {
+        console.log(Project.dataValues[0]);
+        data.Users.forEach(el => {
+          if(el.id === req.user.id) {
+            dataProject.push(data)
+          }
+        })
+        res.status(200).json(dataProject)
+      })
+      .catch((err) => {
+        console.log(err);
+        next(err)
+      })
+  }
+
+  static showAllActiveProject(req, res, next){
+    Project.findAll()
       .then((data) => {
         res.status(200).json(data)
       })
@@ -82,9 +122,9 @@ class Controller {
     })
       .then((data) => {
         if(!data) throw { name: 'Not Found'}
-        let newImage = data.imageData.toString('base64')
-        console.log(newImage);
-        res.status(200).json({data, newImage})
+        // let newImage = data.imageData.toString('base64')
+        // console.log(newImage);
+        res.status(200).json(data)
       })
       .catch((err) => {
         console.log(err);
@@ -95,12 +135,14 @@ class Controller {
   static addProjetMember(req, res, next){
     const { ProjectId, role }  = req.body
     const UserId = req.user.id
+    let dataName
 
     Project.findOne({
       where: { id: ProjectId },
       include: [{model : User, attributes: { exclude: ['password'] }}]
     })
       .then((data) => {
+        dataName = data.dataValues.name
         if(!data) throw { name: 'Not Found'}
         data.Users.forEach(el => {
           if(el.id === req.user.id) throw  { name: 'Exists' }
@@ -111,6 +153,20 @@ class Controller {
       })
     .then((data) => {
       res.status(201).json(data)
+      var mailOptions = {
+        from: 'ekopraseti23@gmail.com',
+        to: req.user.email,
+        subject: `[on behalf Devbisa.com]Congratulation, you just enroll to project ${dataName}`,
+        text: `Congratulation, you just enroll to project ${dataName}`
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
     })
     .catch((err) => {
       console.log(err);

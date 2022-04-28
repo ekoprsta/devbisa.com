@@ -19,11 +19,12 @@ router.get('/',(req, res) => {
 router.post('/login', Controller.userLogin)
 router.post('/google-sign-in', Controller.googleSignIn)
 router.post('/register', Controller.register)
-router.post('/project', upload.single('image'), Controller.createProject)
 router.get('/project', Controller.showAllActiveProject)
 router.get('/project/:id', Controller.showProjectDetail)
 router.use(authenticationMiddleWare)
+router.post('/project', Controller.createProject)
 router.post('/projectmember',Controller.addProjetMember)
+router.get('/projectUser', Controller.showAllProjectUser)
 router.use(errorHandler)
 
 module.exports = router

@@ -18,8 +18,10 @@
         <ul class="nav navbar-nav">
           <li class="active"><router-link to='/'>Home</router-link></li>
           <li class="active"><router-link to='/projects'>Our Projects</router-link></li>
-          <li class="active"><router-link to='/join'>Join Us</router-link></li>
+          <li v-if="this.$store.state.login === false" class="active"><router-link to='/join'>Join Us</router-link></li>
           <li class="active"><router-link to='/contactus'>Contact Us</router-link></li>
+          <li v-if="this.$store.state.login === true" class="active"><router-link to='/contactus'>Join Project</router-link></li>
+          <li v-if="this.$store.state.login === true" class="active" @click.prevent="handleLogut"><router-link to='/'>Log Out</router-link></li>
         </ul>
       </div>
       <!--/.nav-collapse -->
@@ -28,8 +30,25 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
-  name: 'NavbarItem'
+  name: 'NavbarItem',
+  methods: {
+    handleLogut () {
+      localStorage.removeItem('accesstoken')
+      localStorage.removeItem('email')
+      Swal.fire({
+        icon: 'success',
+        title: 'OK!',
+        text: 'Log Out Success'
+      })
+      this.$store.dispatch('getLoginValue')
+      this.$router.push({ name: 'home' })
+    },
+    created () {
+      this.$store.dispatch('getLoginValue')
+    }
+  }
 }
 </script>
 

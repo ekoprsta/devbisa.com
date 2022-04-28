@@ -28,7 +28,8 @@
                             type="text"
                             id="form3Example1c"
                             class="form-control"
-                            placeholder="username"
+                            placeholder="Full Name"
+                            v-model="newUser.fullName"
                           />
                         </div>
                       </div>
@@ -41,6 +42,7 @@
                             id="form3Example3c"
                             class="form-control"
                             placeholder="your email address"
+                            v-model="newUser.email"
                           />
                         </div>
                       </div>
@@ -53,6 +55,7 @@
                             id="form3Example4c"
                             class="form-control"
                             placeholder="password"
+                            v-model="newUser.password"
                           />
                         </div>
                       </div>
@@ -64,7 +67,8 @@
                             type="text"
                             id="form3Example4cd"
                             class="form-control"
-                            placeholder="phone number"
+                            placeholder="github account"
+                            v-model="newUser.githubAccount"
                           />
                         </div>
                       </div>
@@ -76,7 +80,21 @@
                             type="text"
                             id="form3Example4cd"
                             class="form-control"
-                            placeholder="Address"
+                            placeholder="discordAccount"
+                            v-model="newUser.discordAccount"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <input
+                            type="text"
+                            id="form3Example4cd"
+                            class="form-control"
+                            placeholder="WA Phone number"
+                            v-model="newUser.phoneNumber"
                           />
                         </div>
                       </div>
@@ -123,7 +141,7 @@
                       Sign In
                     </p>
                     <!-- form  -->
-                    <form class="mx-1 mx-md-4" @submit.prevent="handleRegister">
+                    <form class="mx-1 mx-md-4" @submit.prevent="handleLogin">
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div class="form-outline flex-fill mb-0">
@@ -132,6 +150,7 @@
                             id="form3Example3c"
                             class="form-control"
                             placeholder="your email address"
+                            v-model="user.email"
                           />
                         </div>
                       </div>
@@ -144,6 +163,7 @@
                             id="form3Example4c"
                             class="form-control"
                             placeholder="password"
+                            v-model="user.password"
                           />
                         </div>
                       </div>
@@ -183,7 +203,9 @@
 </template>
 
 <script>
+import axios from 'axios'
 import NavbarItem from '../components/NavbarItem.vue'
+import Swal from 'sweetalert2'
 export default {
   name: 'RegisterPage',
   components: {
@@ -191,7 +213,19 @@ export default {
   },
   data () {
     return {
-      tombol: ''
+      tombol: '',
+      newUser: {
+        fullname: '',
+        email: '',
+        password: '',
+        githubAccount: '',
+        discordAccount: '',
+        phoneNumber: ''
+      },
+      user: {
+        email: '',
+        password: ''
+      }
     }
   },
   methods: {
@@ -200,6 +234,71 @@ export default {
     },
     signUpClick () {
       this.tombol = 'SignUp'
+    },
+    handleRegister () {
+      const { fullName, email, password, githubAccount, discordAccount, phoneNumber } = this.newUser
+      axios({
+        url: 'http://localhost:3000/register',
+        method: 'POST',
+        data: {
+          fullName, email, password, githubAccount, discordAccount, phoneNumber
+        }
+      })
+        .then((response) => {
+          this.newUser.fullname = ''
+          this.newUser.email = ''
+          this.newUser.password = ''
+          this.newUser.githubAccount = ''
+          this.newUser.discordAccount = ''
+          this.newUser.phoneNumber = ''
+          Swal.fire({
+            icon: 'success',
+            title: 'OK!',
+            text: 'Please Login'
+          })
+          this.tombol = 'SignIn'
+        })
+        .catch((error) => {
+          console.log(error)
+          this.newUser.fullname = ''
+          this.newUser.email = ''
+          this.newUser.password = ''
+          this.newUser.githubAccount = ''
+          this.newUser.discordAccount = ''
+          this.newUser.phoneNumber = ''
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong, please check your data'
+          })
+          this.tombol = 'SignUp'
+        })
+    },
+    handleLogin () {
+      const { email, password } = this.user
+      axios({
+        url: 'http://localhost:3000/login',
+        method: 'POST',
+        data: {
+          email, password
+        }
+      })
+        .then((response) => {
+          const data = response.data
+          console.log(response.status, 'ini code respon')
+          localStorage.setItem('accesstoken', data.accesstoken)
+          localStorage.setItem('email', data.email)
+          this.$store.dispatch('getLoginValue')
+          this.$router.push({ name: 'home' })
+        })
+        .catch((error) => {
+          console.log(error)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please Check Your email or password'
+          })
+        })
     }
   }
 }

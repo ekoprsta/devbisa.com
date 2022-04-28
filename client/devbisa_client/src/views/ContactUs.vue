@@ -16,15 +16,6 @@
           </div>
 
           <div class="col-md-4 widget">
-            <h3 class="widget-title">Follow Us</h3>
-            <div class="widget-body">
-              <p class="follow-me-icons">
-                <a href=""><i class="fa fa-twitter fa-2"></i></a>
-                <a href=""><i class="fa fa-dribbble fa-2"></i></a>
-                <a href=""><i class="fa fa-github fa-2"></i></a>
-                <a href=""><i class="fa fa-facebook fa-2"></i></a>
-              </p>
-            </div>
           </div>
 
           <div class="col-md-4 widget">
@@ -47,15 +38,18 @@
         </div>
         <!-- /row of widgets -->
       </div>
+    <HFooter></HFooter>
   </div>
 </template>
 
 <script>
+import HFooter from 'vue-hacktiv8-footer'
 import NavbarItem from '../components/NavbarItem.vue'
 export default {
   name: 'ContactUs',
   components: {
-    NavbarItem
+    NavbarItem,
+    HFooter
   }
 }
 </script>

@@ -28,26 +28,20 @@
         </div>
       </div>
     </section>
-    <!-- <div class="row section topspace">
-      <div class="col-md-12">
-        <p class="lead text-center text-muted" style="color: black">
-          We want share to other with something different, through Our Code. We
-          Hope from this way we able to share bigger than now. And we build care
-          each other culture
-        </p>
-      </div>
-    </div> -->
+    <HFooter></HFooter>
   </div>
 </template>
 
 <script>
 import HeaderItem from '../components/HeaderItem.vue'
 import NavbarItem from '../components/NavbarItem.vue'
+import HFooter from 'vue-hacktiv8-footer'
 export default {
   name: 'HomePage',
   components: {
     HeaderItem,
-    NavbarItem
+    NavbarItem,
+    HFooter
   }
 }
 </script>

@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 import NavbarItem from '../components/NavbarItem.vue'
 import HeaderItem from '../components/HeaderItem.vue'
 export default {
