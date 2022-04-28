@@ -21,17 +21,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue : 'New'
       },
-      imageType: {
+      imageUrl: {
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      imageName: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      imageData: {
-        allowNull: false,
-        type: Sequelize.BLOB('long')
+        type: Sequelize.STRING,
+        defaultValue : 'https://teammeta.eu/wp-content/uploads/2020/07/developer-1536x864.jpg'
       },
       createdAt: {
         allowNull: false,
