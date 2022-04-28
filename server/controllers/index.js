@@ -6,6 +6,7 @@ const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const fs = require("fs");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -81,7 +82,9 @@ class Controller {
     })
       .then((data) => {
         if(!data) throw { name: 'Not Found'}
-        res.status(200).json(data)
+        let newImage = data.imageData.toString('base64')
+        console.log(newImage);
+        res.status(200).json({data, newImage})
       })
       .catch((err) => {
         console.log(err);
