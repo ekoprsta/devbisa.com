@@ -20,7 +20,7 @@
           <li class="active"><router-link to='/projects'>Our Projects</router-link></li>
           <li v-if="this.$store.state.login === false" class="active"><router-link to='/join'>Join Us</router-link></li>
           <li class="active"><router-link to='/contactus'>Contact Us</router-link></li>
-          <li v-if="this.$store.state.login === true" class="active"><router-link to='/contactus'>Join Project</router-link></li>
+          <li v-if="this.$store.state.login === true" class="active"><router-link to='/myproject'>My Project</router-link></li>
           <li v-if="this.$store.state.login === true" class="active" @click.prevent="handleLogut"><router-link to='/'>Log Out</router-link></li>
         </ul>
       </div>

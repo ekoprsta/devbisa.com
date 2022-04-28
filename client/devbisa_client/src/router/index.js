@@ -43,4 +43,10 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/myproject' && !localStorage.accesstoken) next({ path: '/join', query: { error: 'please login first' } })
+  if (to.path === '/join' && localStorage.accesstoken) next({ path: '/', query: { error: 'already log in' } })
+  else next()
+})
+
 export default router

@@ -42,6 +42,9 @@ export default {
     HeaderItem,
     NavbarItem,
     HFooter
+  },
+  created () {
+    this.$store.dispatch('getLoginValue')
   }
 }
 </script>

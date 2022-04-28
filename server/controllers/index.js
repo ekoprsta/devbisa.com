@@ -84,20 +84,16 @@ class Controller {
 
   static showAllProjectUser(req, res, next){
     let dataProject = []
-    Project.findAll({
+    User.findAll({
+      where : { id : req.user.id },
       include: [{
-        model : User, 
-        attributes: { exclude: ['password'] },
+        model : Project
       }]
     })
-      .then(({data}) => {
-        console.log(Project.dataValues[0]);
-        data.Users.forEach(el => {
-          if(el.id === req.user.id) {
-            dataProject.push(data)
-          }
-        })
-        res.status(200).json(dataProject)
+      .then((data) => {
+        let dataBaru = data
+        console.log(data[0].Projects);
+        res.status(200).json(data[0].Projects)
       })
       .catch((err) => {
         console.log(err);

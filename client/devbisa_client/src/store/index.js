@@ -10,7 +10,8 @@ export default new Vuex.Store({
     projectsActive: [],
     projectComplete: [],
     baseUrl: 'http://localhost:3000',
-    login: false
+    login: false,
+    projectUser: []
   },
   getters: {
   },
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     SET_LOGIN_VALUE (state, payload) {
       state.login = payload
+    },
+    SET_PROJECT_USER (state, payload) {
+      state.projectUser = payload
     }
   },
   actions: {
@@ -57,6 +61,20 @@ export default new Vuex.Store({
         context.commit('SET_LOGIN_VALUE', false)
       }
     },
+    getProjectUser (context) {
+      axios({
+        url: `${this.state.baseUrl}/projectUser`,
+        method: 'GET',
+        headers: { accesstoken: localStorage.getItem('accesstoken') }
+      })
+        .then(({data}) => {
+          context.commit('SET_PROJECT_USER', data)
+          console.log(data, 'ini data');
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
   },
   modules: {
   }
