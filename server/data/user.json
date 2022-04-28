@@ -1,0 +1,42 @@
+[
+  {
+      "fullName": "Rendi",
+      "email": "rendi@mail.com",
+      "password": "rendi@mail.com",
+      "githubAccount": "rendiaja",
+      "discordAccount": "rendiaja",
+      "phoneNumber": "082122232425"
+  },
+  {
+    "fullName": "budi",
+    "email": "budi@mail.com",
+    "password": "budi@mail.com",
+    "githubAccount": "budiaja",
+    "discordAccount": "budiaja",
+    "phoneNumber": "082122232411"
+  },
+  {
+    "fullName": "wahyu",
+    "email": "wahyu@mail.com",
+    "password": "wahyu@mail.com",
+    "githubAccount": "wahyuaja",
+    "discordAccount": "wahyuaja",
+    "phoneNumber": "0909090"
+  },
+  {
+    "fullName": "dimas",
+    "email": "dimas@mail.com",
+    "password": "dimas@mail.com",
+    "githubAccount": "dimasaja",
+    "discordAccount": "dimasaja",
+    "phoneNumber": "32542342"
+  },
+  {
+    "fullName": "acong",
+    "email": "acong@mail.com",
+    "password": "acong@mail.com",
+    "githubAccount": "acongaja",
+    "discordAccount": "acongaja",
+    "phoneNumber": "1231212312"
+  }
+]

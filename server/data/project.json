@@ -1,0 +1,22 @@
+[
+  {
+    "name":"Mobile App for Yayasan RawaJati",
+    "description": "Membuat mobile App untuk membantu operasional Yayasan Rawajati",
+    "status": "Complete"
+  },
+  {
+    "name":"Sistem Informasi untuk Madrasah RW 40",
+    "description": "Membuat Sistem Informasi untuk membantu operasional Sistem Informasi",
+    "status": "New"
+  },
+  {
+    "name":"Website development for Rumah Makan Bersama Sumber Jaya",
+    "description": "Membuat Website for Rumah Makan Bersama Sumber Jaya, untuk meningkatkan penjualan",
+    "status": "In Progress"
+  },
+  {
+    "name":"Develop Apps Teaching Children on rumah singah",
+    "description": "Membuat applikasi dan memberikan pelatihan untuk anak-anak di rumah singgah mengenaik pemograman",
+    "status": "Complete"
+  }
+]
